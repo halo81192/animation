@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function objectInterator() {
+      const keys = Object.keys(this);
+      let index = 0;
+      return {
+        next: () => {
+          const done = index >= keys.length;
+          const value = done ? undefined : this[keys[index]];
+          index++;
+          return {
+            done,
+            value,
+          };
+        },
+      };
+    }
+
+    Object.prototype[Symbol.iterator] = objectInterator;
+    let obj = {
+      a: 1,
+      b: 2,
+    };
+    for (const value of obj) {
+      console.log(value);
+    }
+  </script>
+</html>
